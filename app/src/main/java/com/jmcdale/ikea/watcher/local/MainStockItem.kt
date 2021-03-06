@@ -1,7 +1,9 @@
 package com.jmcdale.ikea.watcher.local
 
 import com.jmcdale.ikea.watcher.remote.IkeaItemStock
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class MainStockItem(
     val itemNumber: String,
     val itemName: String,

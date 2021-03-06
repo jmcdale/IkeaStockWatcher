@@ -1,7 +1,9 @@
 package com.jmcdale.ikea.watcher.remote
 
+import com.squareup.moshi.JsonClass
 import java.time.LocalDate
 
+@JsonClass(generateAdapter = true)
 data class IkeaItemStock(
     val itemNumber: String,
     val availableStock: Int,
@@ -14,7 +16,10 @@ data class IkeaItemStock(
     val stockForecast: List<StockForecast>
 )
 
+@JsonClass(generateAdapter = true)
 data class AvailabilityDetail(val code: String, val message: String)
+
+@JsonClass(generateAdapter = true)
 data class StockForecast(
     val date: LocalDate,
     val probability: String,
