@@ -33,7 +33,7 @@ fun StockItem(
     item: MainStockItem,
     onClick: (item: MainStockItem) -> Unit
 ) {
-    Column(modifier = Modifier.padding(0.dp, 4.dp)) {
+    Column {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
