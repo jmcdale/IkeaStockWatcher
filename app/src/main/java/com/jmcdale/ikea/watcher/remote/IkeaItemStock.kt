@@ -11,7 +11,7 @@ data class IkeaItemStock(
     val inStockProbability: String,
     val inStockRangeCode: String,
     val inCustomerOrderRange: String,
-    val restockDateTime: LocalDate,
+    val restockDateTime: LocalDate?,
     val availabilityDetails: List<AvailabilityDetail>,
     val stockForecast: List<StockForecast>
 )
@@ -37,10 +37,14 @@ fun IkeaItemStockResponse.toIkeaItemStock(): IkeaItemStock {
         this.stockAvailability.RetailItemAvailability.InStockRangeCode.value
     val inCustomerOrderRange: String =
         this.stockAvailability.RetailItemAvailability.InCustomerOrderRangeCode.value
-    val restockDateTime: LocalDate =
-        LocalDate.parse(this.stockAvailability.RetailItemAvailability.RestockDateTime.value)
+    val restockDateTime: LocalDate? =
+        this.stockAvailability.RetailItemAvailability.RestockDateTime?.value?.let {
+            LocalDate.parse(
+                it
+            )
+        }
     val availabilityDetails: List<AvailabilityDetail> =
-        this.stockAvailability.RetailItemAvailability.StockAvailabilityInfoList.StockAvailabilityInfo.toAvailabilityDetails()
+        this.stockAvailability.RetailItemAvailability.StockAvailabilityInfoList?.StockAvailabilityInfo.toAvailabilityDetails()
     val stockForecast: List<StockForecast> =
         this.stockAvailability.AvailableStockForecastList.toStockForecasts()
 
@@ -61,8 +65,8 @@ fun StockAvailabilityInfo.toAvailabilityDetail(): AvailabilityDetail {
     return AvailabilityDetail(this.StockAvailInfoCode.value, this.StockAvailInfoText.value)
 }
 
-fun List<StockAvailabilityInfo>.toAvailabilityDetails(): List<AvailabilityDetail> {
-    return this.map { it.toAvailabilityDetail() }
+fun List<StockAvailabilityInfo>?.toAvailabilityDetails(): List<AvailabilityDetail> {
+    return this?.let { list -> list.map { it.toAvailabilityDetail() } } ?: listOf()
 }
 
 fun AvailableStockForecastList.toStockForecasts(): List<StockForecast> {

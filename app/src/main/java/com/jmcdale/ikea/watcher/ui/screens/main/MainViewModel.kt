@@ -1,46 +1,58 @@
 package com.jmcdale.ikea.watcher.ui.screens.main
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.jmcdale.ikea.watcher.local.DEFAULT_ITEMS
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.jmcdale.ikea.watcher.local.IkeaStockRepository
 import com.jmcdale.ikea.watcher.local.MainStockItem
-import com.jmcdale.ikea.watcher.local.replaceItem
-import com.jmcdale.ikea.watcher.remote.IkeaStore
-import com.jmcdale.ikea.watcher.remote.IkeaWatcherClient
-import com.jmcdale.ikea.watcher.remote.IkeaWatcherResult
-import com.jmcdale.ikea.watcher.utils.notifyObservers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
-class MainViewModel(private val client: IkeaWatcherClient) {
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
+class MainViewModel() : ViewModel() {
 
-    private val _stockItems =
-        MutableLiveData<MutableList<MainStockItem>>(DEFAULT_ITEMS.toMutableList())
-    val stockItems: LiveData<List<MainStockItem>>
-        get() = _stockItems as LiveData<List<MainStockItem>>
+    //TODO make this private. Gotta fix the viemodel factory and DI
+    var _ikeaStockRepository: IkeaStockRepository? by Delegates.observable<IkeaStockRepository?>(
+        null
+    ) { _, _, _ -> reinit() }
+    val ikeaStockRepository: IkeaStockRepository
+        get() = _ikeaStockRepository!!
+
+    lateinit var isLoading: LiveData<Boolean>
+        private set
+    lateinit var stockItems: LiveData<List<MainStockItem>>
+        private set
+
+    //TODO this is only needed bc the repo is not provided via constructor.
+    private fun reinit() {
+        stockItems = ikeaStockRepository.items.asLiveData()
+        isLoading = ikeaStockRepository.isRefreshing.asLiveData()
+    }
+
+    fun onRefreshRequested() {
+        viewModelScope.launch {
+            ikeaStockRepository.refreshItems()
+        }
+    }
 
     fun onItemClicked(item: MainStockItem) {
-        _isLoading.value = true
-        GlobalScope.launch {
-            val result = client.checkItemStock(
-                itemCode = item.itemNumber,
-                IkeaStore.SAINT_LOUIS
-            )
-
-            when (result) {
-                is IkeaWatcherResult.Success -> {
-                    _stockItems.value!!.replaceItem(item.copy(itemStock = result.result))
-                    launch(Dispatchers.Main) { _stockItems.notifyObservers() }
-                }
-                else -> {
-                }
-            }
-
-            launch(Dispatchers.Main) { _isLoading.value = false }
-        }
+//        _isLoading.value = true
+//        GlobalScope.launch {
+//            val result = client.checkItemStock(
+//                itemCode = item.itemNumber,
+//                IkeaStore.SAINT_LOUIS
+//            )
+//
+//            when (result) {
+//                is IkeaWatcherResult.Success -> {
+//                    _stockItems.value!!.replaceItem(item.copy(itemStock = result.result))
+//                    launch(Dispatchers.Main) { _stockItems.notifyObservers() }
+//                }
+//                else -> {
+//                }
+//            }
+//
+//            launch(Dispatchers.Main) { _isLoading.value = false }
+//        }
     }
 }

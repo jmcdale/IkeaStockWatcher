@@ -11,8 +11,8 @@ data class IkeaItemStockResponse(
 
 @JsonClass(generateAdapter = true)
 data class StockAvailability(
-    @Json(name = "ClassUnitKey")
-    val ClassUnitKey: ClassUnitKey,
+//    @Json(name = "ClassUnitKey")
+//    val ClassUnitKey: ClassUnitKey,
 
     @Json(name = "ItemKey")
     val ItemKey: ItemKey,
@@ -23,8 +23,8 @@ data class StockAvailability(
     @Json(name = "AvailableStockForecastList")
     val AvailableStockForecastList: AvailableStockForecastList,
 
-    @Json(name = "@xmlns")
-    val xmlns: Xmlns
+//    @Json(name = "@xmlns")
+//    val xmlns: Xmlns
 )
 
 @JsonClass(generateAdapter = true)
@@ -84,11 +84,11 @@ data class RetailItemAvailability(
     @Json(name = "InCustomerOrderRangeCode")
     val InCustomerOrderRangeCode: InCustomerOrderRangeCode,
     @Json(name = "RestockDateTime")
-    val RestockDateTime: RestockDateTime,
+    val RestockDateTime: RestockDateTime?,
     @Json(name = "RestockDateTimeType")
-    val RestockDateTimeType: RestockDateTimeType,
+    val RestockDateTimeType: RestockDateTimeType?,
     @Json(name = "StockAvailabilityInfoList")
-    val StockAvailabilityInfoList: StockAvailabilityInfoList,
+    val StockAvailabilityInfoList: StockAvailabilityInfoList?,
 )
 
 @JsonClass(generateAdapter = true)

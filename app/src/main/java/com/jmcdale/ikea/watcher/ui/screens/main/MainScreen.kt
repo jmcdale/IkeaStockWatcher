@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -34,6 +31,10 @@ fun MainScreen(viewModel: MainViewModel) {
             Column(Modifier.padding(16.dp)) {
                 if (isLoading) LoadingDialog()
 
+                Button(onClick = viewModel::onRefreshRequested) {
+                    Text(text = "Refresh")
+                }
+
                 LazyColumn {
                     items(items = stockItems, { it.itemNumber }) {
                         StockItem(
@@ -51,7 +52,7 @@ fun MainScreen(viewModel: MainViewModel) {
 @Composable
 fun MainScreenLightPreview() {
     IkeaWatcherTheme {
-        MainScreen(MainViewModel(MockIkeaWatcherClient))
+//        MainScreen(MainViewModel(MockIkeaWatcherClient))
     }
 }
 
@@ -59,6 +60,6 @@ fun MainScreenLightPreview() {
 @Composable
 fun MainScreenDarkPreview() {
     IkeaWatcherTheme(darkTheme = true) {
-        MainScreen(MainViewModel(MockIkeaWatcherClient))
+//        MainScreen(MainViewModel(MockIkeaWatcherClient))
     }
 }

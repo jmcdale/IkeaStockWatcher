@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class IkeaStockRepository(
     private val client: IkeaWatcherClient,
@@ -19,8 +20,8 @@ class IkeaStockRepository(
 
     private var storageWatchJob: Job? = null
 
-    var isRefreshing = false
-        private set
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing = _isRefreshing.asStateFlow()
 
     init {
         GlobalScope.launch { loadItems() }
@@ -29,11 +30,12 @@ class IkeaStockRepository(
     suspend fun refreshItems() {
 //        val items = storage.loadJsonableList(KEY_MAIN_STOCK_ITEMS, listOf<MainStockItem>())
 //        items?.forEach { refreshItem(it) }
+        if (isRefreshing.value) return
         //TODO fix isRefreshing with parallelism
-        isRefreshing = true
+        _isRefreshing.value = true
         //TODO parallel
         itemList.forEach { refreshItem(it) }
-        isRefreshing = false
+        _isRefreshing.value = false
     }
 
     suspend fun refreshItem(item: MainStockItem) {
@@ -74,11 +76,11 @@ class IkeaStockRepository(
     }
 
     private suspend fun emitItems() {
-        _items.emitList(itemList)
+        _items.emitList(itemList.sortedWith(MainStockItemAvailabilityComparator))
     }
 
     private fun MainStockItem.withIkeaItemStock(item: IkeaItemStock): MainStockItem {
-        return this.copy(itemStock = item)
+        return this.copy(itemStock = item, lastRefreshTime = LocalDateTime.now())
     }
 
     private suspend fun saveItem(updatedItemStock: IkeaItemStock) {
@@ -106,4 +108,51 @@ class IkeaStockRepository(
     }
 }
 
+object MainStockItemAvailabilityComparator : Comparator<MainStockItem> {
+    override fun compare(obj1: MainStockItem?, obj2: MainStockItem?): Int {
+//        return when{
+//            obj1 == null && obj2 != null -> OBJ2_COMES_FIRST
+//            obj1 != null && obj2 == null -> OBJ1_COMES_FIRST
+//            obj1 == null && obj2 == null -> BOTH_ARE_EQUAL
+//            obj1!!.itemNumber == obj2!!.itemNumber -> BOTH_ARE_EQUAL
+//            obj1.itemStock == null && obj2.itemStock != null -> OBJ2_COMES_FIRST
+//            obj1.itemStock != null && obj2.itemStock == null -> OBJ1_COMES_FIRST
+//            obj1.itemStock == null && obj2.itemStock == null -> BOTH_ARE_EQUAL
+//            obj1.itemStock!!.availableStock > obj2.itemStock!!.availableStock -> OBJ1_COMES_FIRST
+//            obj1.itemStock.availableStock == obj2.itemStock.availableStock -> BOTH_ARE_EQUAL
+//            obj1.itemStock.availableStock < obj2.itemStock.availableStock -> OBJ2_COMES_FIRST
+//            else -> BOTH_ARE_EQUAL
+//        }
+        return when {
+            // One or the other is null
+            obj1 == null && obj2 != null -> OBJ2_COMES_FIRST
+            obj1 != null && obj2 == null -> OBJ1_COMES_FIRST
+            obj1 == null && obj2 == null -> BOTH_ARE_EQUAL
+            // Same item
+            obj1!!.itemNumber == obj2!!.itemNumber -> BOTH_ARE_EQUAL
+            // One or the other doesn't have itemStock
+            obj1.itemStock == null && obj2.itemStock != null -> OBJ2_COMES_FIRST
+            obj1.itemStock != null && obj2.itemStock == null -> OBJ1_COMES_FIRST
+            obj1.itemStock == null && obj2.itemStock == null -> BOTH_ARE_EQUAL
+            // One or the other has more stock
+            obj1.itemStock!!.availableStock > obj2.itemStock!!.availableStock -> OBJ1_COMES_FIRST
+            obj1.itemStock.availableStock < obj2.itemStock.availableStock -> OBJ2_COMES_FIRST
+            // Both have same non-zero stock levels
+            (obj1.itemStock.availableStock == obj2.itemStock.availableStock) && obj1.itemStock.availableStock != 0 -> BOTH_ARE_EQUAL
+            // Both have zero stock levels, One or the other has upcoming stock availability
+            (obj1.itemStock.availableStock == obj2.itemStock.availableStock) && obj1.itemStock.availableStock == 0
+                    && (obj1.upcomingStock() > obj2.upcomingStock()) -> OBJ1_COMES_FIRST
+            (obj1.itemStock.availableStock == obj2.itemStock.availableStock) && obj1.itemStock.availableStock == 0
+                    && (obj1.upcomingStock() < obj2.upcomingStock()) -> OBJ2_COMES_FIRST
+            else -> BOTH_ARE_EQUAL
+        }
+    }
 
+    private fun MainStockItem.upcomingStock(): Int {
+        return this.itemStock?.stockForecast?.maxOfOrNull { it.availableStock } ?: 0
+    }
+
+    private const val OBJ1_COMES_FIRST = -1
+    private const val BOTH_ARE_EQUAL = 0
+    private const val OBJ2_COMES_FIRST = 1
+}

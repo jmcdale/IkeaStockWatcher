@@ -2,13 +2,15 @@ package com.jmcdale.ikea.watcher.local
 
 import com.jmcdale.ikea.watcher.remote.IkeaItemStock
 import com.squareup.moshi.JsonClass
+import java.time.LocalDateTime
 
 @JsonClass(generateAdapter = true)
 data class MainStockItem(
     val itemNumber: String,
     val itemName: String,
     val imageUrl: String?,
-    val itemStock: IkeaItemStock? = null
+    val itemStock: IkeaItemStock? = null,
+    val lastRefreshTime: LocalDateTime? = null
 )
 
 fun MutableList<MainStockItem>.replaceItem(

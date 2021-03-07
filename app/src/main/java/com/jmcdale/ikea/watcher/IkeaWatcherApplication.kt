@@ -4,6 +4,7 @@ import android.app.Application
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.jmcdale.ikea.watcher.local.LocalDateAdapter
+import com.jmcdale.ikea.watcher.local.LocalDateTimeAdapter
 import com.jmcdale.ikea.watcher.local.LocalStorage
 import com.jmcdale.ikea.watcher.remote.IkeaWatcherClient
 import com.jmcdale.ikea.watcher.remote.IkeaWatcherClientImpl
@@ -67,6 +68,7 @@ class IkeaWatcherApplication : Application() {
     private fun buildMoshi() {
         moshi = Moshi.Builder()
             .add(LocalDateAdapter)
+            .add(LocalDateTimeAdapter)
             .build()
     }
 
