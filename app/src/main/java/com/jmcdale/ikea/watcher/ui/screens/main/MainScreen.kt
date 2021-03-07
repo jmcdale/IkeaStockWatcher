@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.jmcdale.ikea.watcher.remote.MockIkeaWatcherClient
 import com.jmcdale.ikea.watcher.ui.LoadingDialog
 import com.jmcdale.ikea.watcher.ui.theme.IkeaWatcherTheme
+import timber.log.Timber
 
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
@@ -30,7 +31,8 @@ fun MainScreen(viewModel: MainViewModel) {
             )
             Column(Modifier.padding(16.dp)) {
                 if (isLoading) LoadingDialog()
-
+Timber.d("JOSH - color - ${MaterialTheme.colors.primary}")
+                Timber.d("JOSH - color2 - ${IkeaWatcherTheme.colors.primary}")
                 Button(onClick = viewModel::onRefreshRequested) {
                     Text(text = "Refresh")
                 }

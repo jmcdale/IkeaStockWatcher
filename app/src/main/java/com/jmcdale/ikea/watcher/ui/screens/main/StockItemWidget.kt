@@ -111,9 +111,9 @@ fun StockItemForecastItem(forecast: StockForecast) {
     val availability = forecast.availableStock
 
     val color = when (availability) {
-        0 -> Color.Red
-        in 1..9 -> Color.Yellow
-        else -> Color.Green
+        0 -> IkeaWatcherTheme.colors.redLight
+        in 1..9 -> IkeaWatcherTheme.colors.yellowLight
+        else -> IkeaWatcherTheme.colors.greenLight
     }
     val painter = remember { ColorPainter(color) }
 

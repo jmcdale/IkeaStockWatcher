@@ -2,30 +2,24 @@ package com.jmcdale.ikea.watcher.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
-)
+// Theming strategy from:
+// https://howiezuo.medium.com/building-a-design-system-implementation-using-jetpack-compose-part1-bc1de068a56d
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+object IkeaWatcherTheme {
 
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
-)
+    val colors: IkeaWatcherColorPalette
+        @Composable get() = LocalIkeaWatcherColorPalette.current
+
+    val typography: IkeaWatcherTypography
+        @Composable get() = LocalIkeaWatcherTypography.current
+
+    val dimens: IkeaWatcherDimens
+        @Composable get() = LocalIkeaWatcherDimens.current
+}
 
 @Composable
 fun IkeaWatcherTheme(
@@ -33,15 +27,32 @@ fun IkeaWatcherTheme(
     content: @Composable() () -> Unit
 ) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        IkeaWatcherDarkColorPalette
     } else {
-        LightColorPalette
+        IkeaWatcherLightColorPalette
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    val typography = IkeaWatcherTypography
+
+    val dimens = IkeaWatcherDimens
+
+    CompositionLocalProvider(
+        LocalIkeaWatcherColorPalette provides colors,
+        LocalIkeaWatcherTypography provides typography,
+        LocalIkeaWatcherDimens provides dimens
+    ) {
+        MaterialTheme(
+            colors = colors.materialColors,
+            typography = typography.materialTypography,
+            shapes = IkeaWatcherShapes,
+            content = content
+        )
+    }
 }
+
+val LocalIkeaWatcherColorPalette =
+    staticCompositionLocalOf<IkeaWatcherColorPalette> { IkeaWatcherLightColorPalette }
+
+val LocalIkeaWatcherTypography = staticCompositionLocalOf { IkeaWatcherTypography }
+
+val LocalIkeaWatcherDimens = staticCompositionLocalOf { IkeaWatcherDimens }
