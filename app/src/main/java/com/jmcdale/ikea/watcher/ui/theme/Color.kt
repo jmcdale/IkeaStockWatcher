@@ -62,7 +62,7 @@ object IkeaWatcherDarkColorPalette : IkeaWatcherColorPalette {
     override val onSurface = Color.White
     override val onError = Color.Black
 
-    override val redLight = IkeaWatcherColors.lightRed
+    override val redLight = IkeaWatcherColors.ikeaBackgroundLight
     override val yellowLight = IkeaWatcherColors.lightYellow
     override val greenLight = IkeaWatcherColors.lightGreen
 
@@ -96,7 +96,7 @@ object IkeaWatcherLightColorPalette : IkeaWatcherColorPalette {
     override val onSurface = Color.Black
     override val onError = Color.White
 
-    override val redLight = IkeaWatcherColors.lightRed
+    override val redLight = IkeaWatcherColors.ikeaBackgroundLight
     override val yellowLight = IkeaWatcherColors.lightYellow
     override val greenLight = IkeaWatcherColors.lightGreen
 

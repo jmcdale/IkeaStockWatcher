@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -117,16 +116,22 @@ fun StockItemForecastItem(forecast: StockForecast) {
     }
     val painter = remember { ColorPainter(color) }
 
-    Box(modifier = Modifier
-        .padding(4.dp)
-        .size(24.dp)
-        .clip(MaterialTheme.shapes.small)){
+    Box(
+        modifier = Modifier
+            .padding(4.dp)
+            .size(24.dp)
+            .clip(MaterialTheme.shapes.small)
+    ) {
         Box(
             modifier = Modifier
-                .border(1.dp, MaterialTheme.colors.onSurface, MaterialTheme.shapes.small)
+                .border(1.dp, MaterialTheme.colors.onSecondary, MaterialTheme.shapes.small)
                 .paint(painter),
         )
-        Text(text = dayOfMonth.toString(), modifier = Modifier.align(Alignment.Center))
+        Text(
+            text = dayOfMonth.toString(),
+            modifier = Modifier.align(Alignment.Center),
+            color = IkeaWatcherTheme.colors.onSecondary
+        )
     }
 
 
