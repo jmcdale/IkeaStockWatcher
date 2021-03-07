@@ -5,13 +5,10 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.jmcdale.ikea.watcher.local.LocalDateAdapter
 import com.jmcdale.ikea.watcher.local.LocalStorage
-import com.jmcdale.ikea.watcher.local.LocalStorageTest
 import com.jmcdale.ikea.watcher.remote.IkeaWatcherClient
 import com.jmcdale.ikea.watcher.remote.IkeaWatcherClientImpl
 import com.jmcdale.ikea.watcher.remote.IkeaWatcherService
 import com.squareup.moshi.Moshi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -33,7 +30,9 @@ class IkeaWatcherApplication : Application() {
         buildMoshi()
         buildClient()
         buildLocalStorage()
+
     }
+
 
     // resource: https://github.com/Ephigenia/ikea-availability-checker/blob/master/source/lib/iows2.js
     private fun buildClient() {
