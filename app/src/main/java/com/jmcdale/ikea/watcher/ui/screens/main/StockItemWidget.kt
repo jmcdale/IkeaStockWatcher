@@ -92,16 +92,6 @@ fun StockItemForecast(forecast: List<StockForecast>) {
             StockItemForecastItem(forecast = it)
         }
     }
-//    item.itemStock?.stockForecast
-//    Text(text = item.itemName)
-//    Text(text = item.itemNumber.formatItemNumber())
-//    val refreshTime = item.lastRefreshTime?.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)) ?: "Never"
-//    Text(text = "Last Update: $refreshTime")
-//    if (item.itemStock!!.availableStock > 0) {
-//        Text(text = "${item.itemStock.availableStock} Available")
-//    } else {
-//        Text(text = "Unavailable")
-//    }
 }
 
 @Composable
@@ -136,30 +126,6 @@ fun StockItemForecastItem(forecast: StockForecast) {
 
 
 }
-
-//@Composable
-//fun StockItemForecastItem(forecast: StockForecast) {
-//    val dayOfMonth = forecast.date.dayOfMonth
-//    val availability = forecast.availableStock
-//
-//    val color = when (availability) {
-//        0 -> Color.Red
-//        in 1..9 -> Color.Yellow
-//        else -> Color.Green
-//    }
-//    val painter = remember { ColorPainter(color) }
-//    Box(
-//        modifier = Modifier
-//            .padding(4.dp)
-//            .size(24.dp)
-//            .clip(MaterialTheme.shapes.small)
-//            .border(1.dp, MaterialTheme.colors.onSurface, MaterialTheme.shapes.small)
-//            .paint(painter),
-//    ) {
-//        Text(text = dayOfMonth.toString())
-//    }
-//
-//}
 
 @Preview
 @Composable
