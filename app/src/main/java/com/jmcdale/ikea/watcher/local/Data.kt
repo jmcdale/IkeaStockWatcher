@@ -18,7 +18,7 @@ val DEFAULT_ITEMS = listOf(
     ),
     MainStockItem(
         itemNumber = "502.655.02".cleanItemNumber(),
-        itemName = "SEKTION Base corner cabinet frame, white47x26x30",
+        itemName = "SEKTION Base corner cabinet frame, white 47x26x30",
         imageUrl = "https://www.ikea.com/us/en/images/products/sektion-base-corner-cabinet-frame-white__0626401_pe692727_s5.jpg?f=xxxs"
     ),
     MainStockItem(
