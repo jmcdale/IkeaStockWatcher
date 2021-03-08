@@ -1,9 +1,6 @@
 package com.jmcdale.ikea.watcher.ui.screens.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.jmcdale.ikea.watcher.local.IkeaStockRepository
 import com.jmcdale.ikea.watcher.local.MainStockItem
 import kotlinx.coroutines.launch
@@ -23,6 +20,10 @@ class MainViewModel() : ViewModel() {
     lateinit var stockItems: LiveData<List<MainStockItem>>
         private set
 
+    private val _selectedItem = MutableLiveData<MainStockItem?>(null)
+        val selectedItem: LiveData<MainStockItem?>
+            get() = _selectedItem
+
     //TODO this is only needed bc the repo is not provided via constructor.
     private fun reinit() {
         stockItems = ikeaStockRepository.items.asLiveData()
@@ -36,6 +37,7 @@ class MainViewModel() : ViewModel() {
     }
 
     fun onItemClicked(item: MainStockItem) {
+        _selectedItem.value = item
 //        _isLoading.value = true
 //        GlobalScope.launch {
 //            val result = client.checkItemStock(
@@ -54,5 +56,9 @@ class MainViewModel() : ViewModel() {
 //
 //            launch(Dispatchers.Main) { _isLoading.value = false }
 //        }
+    }
+
+    fun onItemDialogDismissRequest(){
+        _selectedItem.value = null
     }
 }

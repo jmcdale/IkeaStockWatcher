@@ -22,4 +22,9 @@
     <style name="Theme.IkeaWatcher.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.IkeaWatcher.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.IkeaWatcher.DialogFullScreen" parent="@style/ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+    </style>
 </resources>
