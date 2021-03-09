@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.jmcdale.ikea.watcher.R
 import com.jmcdale.ikea.watcher.local.MainStockItem
 import com.jmcdale.ikea.watcher.local.formatItemNumber
+import com.jmcdale.ikea.watcher.local.upcomingStock
 import com.jmcdale.ikea.watcher.ui.FullScreenDialog
 import com.jmcdale.ikea.watcher.ui.theme.IkeaWatcherTheme
 import dev.chrisbanes.accompanist.coil.CoilImage
@@ -75,6 +76,7 @@ fun ColumnScope.ItemDetails(item: MainStockItem) {
                 )
             )
             Text(text = restockDate)
+            Text(text = "Estimated Restock Amount: ${item.upcomingStock().toString()}")
         }
         Spacer(modifier = Modifier.height(IkeaWatcherTheme.dimens.margin))
         StockItemForecast(item.itemStock.stockForecast)

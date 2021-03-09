@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -20,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jmcdale.ikea.watcher.local.MainStockItem
 import com.jmcdale.ikea.watcher.local.formatItemNumber
+import com.jmcdale.ikea.watcher.local.upcomingStock
 import com.jmcdale.ikea.watcher.remote.StockForecast
 import com.jmcdale.ikea.watcher.ui.theme.IkeaWatcherTheme
 import dev.chrisbanes.accompanist.coil.CoilImage
@@ -78,11 +80,45 @@ fun KnownStockItem(item: MainStockItem, onClick: (item: MainStockItem) -> Unit) 
             ?: "Never"
     Text(text = "Last Update: $refreshTime")
     if (item.itemStock!!.availableStock > 0) {
-        Text(text = "${item.itemStock.availableStock} Available")
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            val color =
+                if (item.itemStock.availableStock > 10) IkeaWatcherTheme.colors.greenLight
+                else IkeaWatcherTheme.colors.yellowLight
+            ColoredCircle(color = color)
+            Text(
+                text = "${item.itemStock.availableStock} Available",
+                modifier = Modifier.padding(
+                    IkeaWatcherTheme.dimens.halfMargin,
+                    IkeaWatcherTheme.dimens.none,
+                    IkeaWatcherTheme.dimens.none,
+                    IkeaWatcherTheme.dimens.none
+                )
+            )
+        }
     } else {
         Text(text = "Unavailable")
     }
-    StockItemForecast(item.itemStock.stockForecast)
+    val restockDate =
+        item.itemStock.restockDateTime?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+            ?: "Unknown"
+
+    if (item.itemStock.availableStock == 0) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            val color =
+                if (item.upcomingStock() > 0) IkeaWatcherTheme.colors.yellowLight
+                else IkeaWatcherTheme.colors.redLight
+            ColoredCircle(color = color, item.upcomingStock().toString())
+            Text(
+                text = "Estimated Restock Date: $restockDate",
+                modifier = Modifier.padding(
+                    IkeaWatcherTheme.dimens.halfMargin,
+                    IkeaWatcherTheme.dimens.none,
+                    IkeaWatcherTheme.dimens.none,
+                    IkeaWatcherTheme.dimens.none
+                )
+            )
+        }
+    }
 }
 
 @Composable
@@ -122,6 +158,35 @@ fun StockItemForecastItem(forecast: StockForecast) {
             modifier = Modifier.align(Alignment.Center),
             color = IkeaWatcherTheme.colors.onSecondary
         )
+    }
+
+
+}
+
+
+@Composable
+fun ColoredCircle(color: Color, text: String? = null) {
+
+    val painter = remember { ColorPainter(color) }
+
+    Box(
+        modifier = Modifier
+            .padding(4.dp)
+            .size(24.dp)
+            .clip(CircleShape)
+    ) {
+        Box(
+            modifier = Modifier
+                .border(1.dp, MaterialTheme.colors.onSecondary, CircleShape)
+                .paint(painter)
+        )
+        text?.let {
+            Text(
+                text = text,
+                modifier = Modifier.align(Alignment.Center),
+                color = IkeaWatcherTheme.colors.onSecondary
+            )
+        }
     }
 
 

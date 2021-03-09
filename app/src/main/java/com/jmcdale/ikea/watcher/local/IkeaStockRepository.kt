@@ -148,10 +148,6 @@ object MainStockItemAvailabilityComparator : Comparator<MainStockItem> {
         }
     }
 
-    private fun MainStockItem.upcomingStock(): Int {
-        return this.itemStock?.stockForecast?.maxOfOrNull { it.availableStock } ?: 0
-    }
-
     private const val OBJ1_COMES_FIRST = -1
     private const val BOTH_ARE_EQUAL = 0
     private const val OBJ2_COMES_FIRST = 1

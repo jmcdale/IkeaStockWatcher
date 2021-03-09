@@ -13,6 +13,10 @@ data class MainStockItem(
     val lastRefreshTime: LocalDateTime? = null
 )
 
+fun MainStockItem.upcomingStock(): Int {
+    return this.itemStock?.stockForecast?.maxOfOrNull { it.availableStock } ?: 0
+}
+
 fun MutableList<MainStockItem>.replaceItem(
     item: MainStockItem
 ) {
