@@ -76,26 +76,37 @@ class LocalStorage(private val context: Context, private val moshi: Moshi) {
         } ?: default
     }
 
-    suspend inline fun <reified I, reified L : List<I>> flowJsonableList(key: String): Flow<List<I>> {
+    inline fun <reified I, reified L : List<I>> flowJsonableList(key: String): Flow<List<I>> {
         val type = Types.newParameterizedType(L::class.java, I::class.java)
         return flowJsonableList(key, type)
     }
 
-    suspend fun <T> flowJsonableList(key: String, type: Type): Flow<T> {
+    fun <T> flowJsonableList(key: String, type: Type): Flow<T> {
         val adapter = moshi.adapter<T>(type)
         return dataStore.data.map { prefs ->
             prefs[stringPreferencesKey(key)]?.let { adapter.fromJson(it) }
         }.filterNot { it == null } as Flow<T>
     }
 
-    suspend inline fun <reified D> flowJsonable(key: String): Flow<D?> {
+    inline fun <reified D> flowJsonable(key: String): Flow<D?> {
         return flowJsonable(key, D::class.java)
     }
 
-    suspend fun <D> flowJsonable(key: String, type: Class<D>): Flow<D?> {
+    inline fun <reified D> flowJsonable(key: String, default: D): Flow<D> {
+        return flowJsonable(key, default, D::class.java)
+    }
+
+    fun <D> flowJsonable(key: String, type: Class<D>): Flow<D?> {
         val adapter = moshi.adapter(type)
         return dataStore.data.map { prefs ->
             prefs[stringPreferencesKey(key)]?.let { adapter.fromJson(it) }
+        }
+    }
+
+    fun <D> flowJsonable(key: String, default: D, type: Class<D>): Flow<D> {
+        val adapter = moshi.adapter(type)
+        return dataStore.data.map { prefs ->
+            prefs[stringPreferencesKey(key)]?.let { adapter.fromJson(it) } ?: default
         }
     }
 

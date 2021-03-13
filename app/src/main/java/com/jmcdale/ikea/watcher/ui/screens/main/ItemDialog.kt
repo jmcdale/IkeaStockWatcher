@@ -91,9 +91,9 @@ fun ColumnScope.ItemDetails(item: MainStockItem) {
 @Composable
 fun ColumnScope.ItemDetailsForStore(itemStock: IkeaItemStock, store: IkeaStore) {
     if (itemStock.availableStock > 0) {
-        Text(text = "${itemStock.availableStock} Available at ${store.abbreviation}")
+        Text(text = "${itemStock.availableStock} Available at ${store.locationName}")
     } else {
-        Text(text = "Unavailable at ${store.abbreviation}", style = IkeaWatcherTheme.typography.body1.toMedium())
+        Text(text = "Unavailable at ${store.locationName}", style = IkeaWatcherTheme.typography.body1.toMedium())
     }
     Spacer(modifier = Modifier.height(IkeaWatcherTheme.dimens.margin))
     if (itemStock.availabilityDetails.isNotEmpty()) {

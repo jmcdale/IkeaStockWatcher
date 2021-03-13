@@ -111,7 +111,7 @@ fun StockItemForStore(itemStock: IkeaItemStock, store: IkeaStore) {
                 else IkeaWatcherTheme.colors.yellowLight
             ColoredCircle(color = color)
             Text(
-                text = "${itemStock.availableStock} Available at ${store.abbreviation}",
+                text = "${itemStock.availableStock} Available at ${store.locationName}",
                 modifier = Modifier.padding(
                     IkeaWatcherTheme.dimens.halfMargin,
                     IkeaWatcherTheme.dimens.none,
@@ -121,7 +121,7 @@ fun StockItemForStore(itemStock: IkeaItemStock, store: IkeaStore) {
             )
         }
     } else {
-        Text(text = "Unavailable at ${store.abbreviation}")
+        Text(text = "Unavailable at ${store.locationName}")
     }
     val restockDate =
         itemStock.restockDateTime?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))

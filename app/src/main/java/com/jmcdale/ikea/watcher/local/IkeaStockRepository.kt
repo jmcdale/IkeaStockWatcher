@@ -7,6 +7,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
@@ -14,8 +15,8 @@ class IkeaStockRepository(
     private val client: IkeaWatcherClient,
     private val storage: LocalStorage
 ) {
-
     private val defaultFilters = StockFilters(listOf(IkeaStore.SAINT_LOUIS, IkeaStore.KANSAS_CITY))
+
     private val _filters = MutableStateFlow(defaultFilters)
     val filters = _filters.asStateFlow()
 
@@ -30,15 +31,28 @@ class IkeaStockRepository(
 
     init {
         GlobalScope.launch { loadItems() }
+        GlobalScope.launch {
+            storage.flowJsonable(KEY_STOCK_FILTERS, defaultFilters).stateIn(GlobalScope).collect {
+                _filters.value = it
+            }
+        }
     }
 
-    suspend fun updateFilters(newFilters: StockFilters): Boolean {
+    private suspend fun updateFilters(newFilters: StockFilters): Boolean {
         return storage.saveJsonable(KEY_STOCK_FILTERS, newFilters)
     }
 
+    suspend fun addStoreFilter(store: IkeaStore) {
+        val newStores = filters.value.stores.toMutableList().apply { add(store) }
+        updateFilters(filters.value.copy(stores = newStores))
+    }
+
+    suspend fun removeStoreFilter(store: IkeaStore) {
+        val newStores = filters.value.stores.toMutableList().apply { remove(store) }
+        updateFilters(filters.value.copy(stores = newStores))
+    }
+
     suspend fun refreshItems() {
-//        val items = storage.loadJsonableList(KEY_MAIN_STOCK_ITEMS, listOf<MainStockItem>())
-//        items?.forEach { refreshItem(it) }
         if (isRefreshing.value) return
         //TODO fix isRefreshing with parallelism
         _isRefreshing.value = true

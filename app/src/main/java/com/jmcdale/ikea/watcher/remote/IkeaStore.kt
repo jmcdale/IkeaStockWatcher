@@ -5,12 +5,22 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class IkeaStore(val id: String, val locationName: String, val abbreviation: String) {
     companion object {
+
         val BOLINGBROOK = IkeaStore("170", "Bolingbrook, IL", "BLK")
         val FISHERS = IkeaStore("536", "Fishers, IN", "IN")
         val KANSAS_CITY = IkeaStore("374", "Merriam, KS", "KC")
         val MEMPHIS = IkeaStore("508", "Memphis, TN", "TN")
         val SAINT_LOUIS = IkeaStore("410", "St. Louis, MO", "STL")
         val SCHAUMBURG = IkeaStore("210", "Schaumburg, IL", "SCH")
+
+        val availableStores = listOf(
+            BOLINGBROOK,
+            FISHERS,
+            KANSAS_CITY,
+            MEMPHIS,
+            SAINT_LOUIS,
+            SCHAUMBURG
+        )
 
         fun fromStoreId(storeId: String): IkeaStore {
             return when (storeId) {
