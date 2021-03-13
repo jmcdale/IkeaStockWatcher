@@ -90,3 +90,11 @@ object IkeaWatcherTypography {
         overline = overline
     )
 }
+
+fun TextStyle.toMedium():TextStyle{
+    return this.copy(fontWeight = FontWeight.Medium)
+}
+
+fun TextStyle.toBold():TextStyle{
+    return this.copy(fontWeight = FontWeight.Bold)
+}

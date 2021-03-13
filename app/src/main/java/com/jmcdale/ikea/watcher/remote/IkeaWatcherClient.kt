@@ -41,5 +41,3 @@ class IkeaWatcherClientImpl(private val service: IkeaWatcherService) : IkeaWatch
         }
     }
 }
-
-object MockIkeaWatcherClient : IkeaWatcherClient

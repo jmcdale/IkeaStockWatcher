@@ -9,13 +9,22 @@ data class MainStockItem(
     val itemNumber: String,
     val itemName: String,
     val imageUrl: String?,
-    val itemStock: IkeaItemStock? = null,
+    val itemStocks: Map<String, IkeaItemStock> = mapOf(),
     val lastRefreshTime: LocalDateTime? = null,
     val numberDesired:Int
 )
 
-fun MainStockItem.upcomingStock(): Int {
-    return this.itemStock?.stockForecast?.maxOfOrNull { it.availableStock } ?: 0
+fun MainStockItem.anyUpcomingStock(): Int {
+    return this.itemStocks.flatMap { it.value.stockForecast }.maxOfOrNull { it.availableStock } ?: 0
+//    return this.itemStocks.keys.maxOfOrNull { upcomingStock(it) } ?: 0
+}
+
+fun MainStockItem.upcomingStock(storeId:String): Int {
+    return this.itemStocks[storeId]?.upcomingStock() ?: 0
+}
+
+fun IkeaItemStock.upcomingStock(): Int {
+    return this.stockForecast.maxOfOrNull { it.availableStock } ?: 0
 }
 
 fun MutableList<MainStockItem>.replaceItem(
