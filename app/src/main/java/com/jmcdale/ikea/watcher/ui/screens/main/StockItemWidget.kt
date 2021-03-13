@@ -86,7 +86,7 @@ fun KnownStockItem(item: MainStockItem, onClick: (item: MainStockItem) -> Unit) 
                 else IkeaWatcherTheme.colors.yellowLight
             ColoredCircle(color = color)
             Text(
-                text = "${item.itemStock.availableStock} Available",
+                text = "${item.itemStock.availableStock} Available (${item.numberDesired} wanted)",
                 modifier = Modifier.padding(
                     IkeaWatcherTheme.dimens.halfMargin,
                     IkeaWatcherTheme.dimens.none,
@@ -96,7 +96,7 @@ fun KnownStockItem(item: MainStockItem, onClick: (item: MainStockItem) -> Unit) 
             )
         }
     } else {
-        Text(text = "Unavailable")
+        Text(text = "Unavailable (${item.numberDesired} wanted)")
     }
     val restockDate =
         item.itemStock.restockDateTime?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))

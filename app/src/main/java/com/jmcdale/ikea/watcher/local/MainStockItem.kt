@@ -10,7 +10,8 @@ data class MainStockItem(
     val itemName: String,
     val imageUrl: String?,
     val itemStock: IkeaItemStock? = null,
-    val lastRefreshTime: LocalDateTime? = null
+    val lastRefreshTime: LocalDateTime? = null,
+    val numberDesired:Int
 )
 
 fun MainStockItem.upcomingStock(): Int {
