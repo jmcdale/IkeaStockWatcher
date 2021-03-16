@@ -53,7 +53,7 @@ fun StockItem(
                     )
                     Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)) {
                         Text(
-                            text = item.itemName,
+                            text = "${item.numberDesired} ${item.itemName}",
                             style = IkeaWatcherTheme.typography.body1.toMedium()
                         )
                         Text(text = item.itemNumber.formatItemNumber())

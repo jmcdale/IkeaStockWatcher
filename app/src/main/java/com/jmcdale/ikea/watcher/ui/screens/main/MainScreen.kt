@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,11 +34,16 @@ fun MainScreen(viewModel: MainViewModel) {
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
                 actions = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_settings_24),
-                        contentDescription = null,
-                        modifier = Modifier.clickable{viewModel.onSettingsClicked()}
-                    )
+                    Box(modifier = Modifier
+                        .clickable { viewModel.onSettingsClicked() }
+                        .fillMaxHeight()
+                        .aspectRatio(1f)) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_settings_24),
+                            contentDescription = null,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
                 }
             )
             Column(Modifier.padding(IkeaWatcherTheme.dimens.margin, IkeaWatcherTheme.dimens.none)) {
