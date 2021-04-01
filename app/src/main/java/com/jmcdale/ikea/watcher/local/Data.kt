@@ -49,12 +49,12 @@ val DEFAULT_ITEMS = listOf(
 //        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-base-corner-cabinet-frame-white__0626401_pe692727_s5.jpg?f=xxxs",
 //        numberDesired = 1
 //    ),
-    MainStockItem(
-        itemNumber = "802.653.98".cleanItemNumber(),
-        itemName = "SEKTION Base cabinet frame, white 36x24x30",
-        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-base-cabinet-frame-white__0268632_pe415276_s5.jpg?f=xxxs",
-        numberDesired = 2
-    ),
+//    MainStockItem(
+//        itemNumber = "802.653.98".cleanItemNumber(),
+//        itemName = "SEKTION Base cabinet frame, white 36x24x30",
+//        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-base-cabinet-frame-white__0268632_pe415276_s5.jpg?f=xxxs",
+//        numberDesired = 2
+//    ),
 //    MainStockItem(
 //        itemNumber = "902.656.42".cleanItemNumber(),
 //        itemName = "UTRUSTA Drawer front, high 36",
