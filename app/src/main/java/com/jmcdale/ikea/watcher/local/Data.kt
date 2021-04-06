@@ -61,4 +61,10 @@ val DEFAULT_ITEMS = listOf(
 //        imageUrl = "https://www.ikea.com/us/en/images/products/utrusta-drawer-front-high__0269420_pe407082_s5.jpg?f=xxxs",
 //        numberDesired = 1
 //    )
+    MainStockItem(
+        itemNumber = "902.654.68".cleanItemNumber(),
+        itemName = "SEKTION Wall cabinet frame, white30x14 3/4x40 (For Laundry Room)\"",
+        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-wall-cabinet-frame-white__0258730_pe406220_s5.jpg?f=xxxs",
+        numberDesired = 2
+    ),
 )

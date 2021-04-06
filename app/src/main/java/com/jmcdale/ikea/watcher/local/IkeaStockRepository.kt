@@ -15,7 +15,7 @@ class IkeaStockRepository(
     private val client: IkeaWatcherClient,
     private val storage: LocalStorage
 ) {
-    private val defaultFilters = StockFilters(listOf(IkeaStore.SAINT_LOUIS, IkeaStore.KANSAS_CITY))
+    private val defaultFilters = StockFilters(listOf(IkeaStore.SAINT_LOUIS, IkeaStore.KANSAS_CITY, IkeaStore.SCHAUMBURG))
 
     private val _filters = MutableStateFlow(defaultFilters)
     val filters = _filters.asStateFlow()
