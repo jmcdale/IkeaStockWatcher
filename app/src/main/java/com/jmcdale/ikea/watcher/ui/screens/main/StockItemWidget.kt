@@ -165,7 +165,7 @@ fun StockItemForecastItem(forecast: StockForecast) {
         in 1..9 -> IkeaWatcherTheme.colors.yellowLight
         else -> IkeaWatcherTheme.colors.greenLight
     }
-    val painter = remember { ColorPainter(color) }
+    val painter = remember(color) { ColorPainter(color) }
 
     Box(
         modifier = Modifier
@@ -192,7 +192,7 @@ fun StockItemForecastItem(forecast: StockForecast) {
 @Composable
 fun ColoredCircle(color: Color, text: String? = null) {
 
-    val painter = remember { ColorPainter(color) }
+    val painter = remember(color) { ColorPainter(color) }
 
     Box(
         modifier = Modifier
