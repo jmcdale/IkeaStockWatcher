@@ -17,9 +17,6 @@ import timber.log.Timber
 
 
 class IkeaWatcherApplication : Application() {
-
-    val fullScreenDialogStyleId: Int = R.style.Theme_IkeaWatcher_DialogFullScreen
-
     lateinit var client: IkeaWatcherClient
     lateinit var localStorage: LocalStorage
     lateinit var moshi: Moshi

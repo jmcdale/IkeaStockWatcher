@@ -184,7 +184,7 @@ private class DialogWrapper(
      * [Window.setClipToOutline] is only available from 22+, but the style attribute exists on 21.
      * So use a wrapped context that sets this attribute for compatibility back to 21.
      */
-    ContextThemeWrapper(composeView.context, IkeaWatcherApplication.instance!!.fullScreenDialogStyleId)
+    ContextThemeWrapper(composeView.context, com.jmcdale.ikea.watcher.R.style.Theme_IkeaWatcher_DialogFullScreen)
 ) {
     private val dialogLayout: DialogLayout
 
