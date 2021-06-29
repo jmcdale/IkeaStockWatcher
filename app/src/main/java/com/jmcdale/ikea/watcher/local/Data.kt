@@ -1,18 +1,18 @@
 package com.jmcdale.ikea.watcher.local
 
 val DEFAULT_ITEMS = listOf(
-//    MainStockItem(
-//        itemNumber = "002.653.97".cleanItemNumber(),
-//        itemName = "SEKTION Base cabinet frame, white15x24x30",
-//        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-base-cabinet-frame-white__0268596_pe415272_s5.jpg?f=xxxs",
-//        numberDesired = 2
-//    ),
-//    MainStockItem(
-//        itemNumber = "002.654.39".cleanItemNumber(),
-//        itemName = "SEKTION High cabinet frame, white18x24x90",
-//        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-high-cabinet-frame-white__0268551_pe406649_s5.jpg?f=xxxs",
-//        numberDesired = 2
-//    ),
+    MainStockItem(
+        itemNumber = "002.653.97".cleanItemNumber(),
+        itemName = "SEKTION Base cabinet frame, white15x24x30",
+        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-base-cabinet-frame-white__0268596_pe415272_s5.jpg?f=xxxs",
+        numberDesired = 2
+    ),
+    MainStockItem(
+        itemNumber = "002.654.39".cleanItemNumber(),
+        itemName = "SEKTION High cabinet frame, white18x24x90",
+        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-high-cabinet-frame-white__0268551_pe406649_s5.jpg?f=xxxs",
+        numberDesired = 2
+    ),
     MainStockItem(
         itemNumber = "202.653.96".cleanItemNumber(),
         itemName = "SEKTION Base cabinet frame, white18x24x30",
@@ -31,24 +31,24 @@ val DEFAULT_ITEMS = listOf(
         imageUrl = "https://www.ikea.com/us/en/images/products/sektion-base-cabinet-frame-white__0268628_pe415274_s5.jpg?f=xxxs",
         numberDesired = 2
     ),
-//    MainStockItem(
-//        itemNumber = "302.654.52".cleanItemNumber(),
-//        itemName = "SEKTION Wall cabinet frame, white21x14 3/4x40",
-//        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-wall-cabinet-frame-white__0258578_pe406194_s5.jpg?f=xxxs",
-//        numberDesired = 1
-//    ),
-//    MainStockItem(
-//        itemNumber = "404.874.19".cleanItemNumber(),
-//        itemName = "SEKTION High cabinet frame, white 30x24x90",
-//        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-high-cabinet-frame-white__0268580_pe406659_s5.jpg?f=xxxs",
-//        numberDesired = 1
-//    ),
-//    MainStockItem(
-//        itemNumber = "502.655.02".cleanItemNumber(),
-//        itemName = "SEKTION Base corner cabinet frame, white 47x26x30",
-//        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-base-corner-cabinet-frame-white__0626401_pe692727_s5.jpg?f=xxxs",
-//        numberDesired = 1
-//    ),
+    MainStockItem(
+        itemNumber = "302.654.52".cleanItemNumber(),
+        itemName = "SEKTION Wall cabinet frame, white21x14 3/4x40",
+        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-wall-cabinet-frame-white__0258578_pe406194_s5.jpg?f=xxxs",
+        numberDesired = 1
+    ),
+    MainStockItem(
+        itemNumber = "404.874.19".cleanItemNumber(),
+        itemName = "SEKTION High cabinet frame, white 30x24x90",
+        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-high-cabinet-frame-white__0268580_pe406659_s5.jpg?f=xxxs",
+        numberDesired = 1
+    ),
+    MainStockItem(
+        itemNumber = "502.655.02".cleanItemNumber(),
+        itemName = "SEKTION Base corner cabinet frame, white 47x26x30",
+        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-base-corner-cabinet-frame-white__0626401_pe692727_s5.jpg?f=xxxs",
+        numberDesired = 1
+    ),
     MainStockItem(
         itemNumber = "802.653.98".cleanItemNumber(),
         itemName = "SEKTION Base cabinet frame, white 36x24x30",
@@ -56,16 +56,16 @@ val DEFAULT_ITEMS = listOf(
 //        numberDesired = 2
         numberDesired = 0
     ),
-//    MainStockItem(
-//        itemNumber = "902.656.42".cleanItemNumber(),
-//        itemName = "UTRUSTA Drawer front, high 36",
-//        imageUrl = "https://www.ikea.com/us/en/images/products/utrusta-drawer-front-high__0269420_pe407082_s5.jpg?f=xxxs",
-//        numberDesired = 1
-//    )
-//    MainStockItem(
-//        itemNumber = "902.654.68".cleanItemNumber(),
-//        itemName = "SEKTION Wall cabinet frame, white30x14 3/4x40 (For Laundry Room)\"",
-//        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-wall-cabinet-frame-white__0258730_pe406220_s5.jpg?f=xxxs",
-//        numberDesired = 2
-//    ),
+    MainStockItem(
+        itemNumber = "902.656.42".cleanItemNumber(),
+        itemName = "UTRUSTA Drawer front, high 36",
+        imageUrl = "https://www.ikea.com/us/en/images/products/utrusta-drawer-front-high__0269420_pe407082_s5.jpg?f=xxxs",
+        numberDesired = 1
+    ),
+    MainStockItem(
+        itemNumber = "902.654.68".cleanItemNumber(),
+        itemName = "SEKTION Wall cabinet frame, white30x14 3/4x40 (For Laundry Room)\"",
+        imageUrl = "https://www.ikea.com/us/en/images/products/sektion-wall-cabinet-frame-white__0258730_pe406220_s5.jpg?f=xxxs",
+        numberDesired = 2
+    ),
 )
